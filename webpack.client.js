@@ -1,8 +1,10 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
     mode: 'development',
+    devtool: "source-map",
     entry: './src/index.jsx',
     output: {
         path: path.resolve(__dirname, './build/'),
@@ -13,14 +15,18 @@ module.exports = {
     },
     module: {
         rules: [{
-            test: /\.jsx?$/,
+            test: /\.(js|jsx)?$/,
             use: 'babel-loader',
             exclude: /node_modules/,
         }],
     },
-    plugins:[
+    plugins: [
         new HtmlWebpackPlugin({
             template: './src/index.html'
+        }),
+        new webpack.ProvidePlugin({
+            React: 'react',
+            ReactDOM: 'react-dom'
         })
     ]
 };
